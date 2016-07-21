@@ -6,10 +6,10 @@ hash_ppd_option_t( ppd_option_t* option )
 		AV* choices;
 		int loop;
 
-		hv = newHV();
-
 		if( option != NULL )
 		{
+		        hv = newHV();
+
 			hv_store( hv, "conflicted", 
 					  strlen( "conflicted" ),
 					  newSViv( option->conflicted ), 0 );
@@ -24,7 +24,7 @@ hash_ppd_option_t( ppd_option_t* option )
 
 			hv_store( hv, "text", 
 					  strlen( "text" ),
-					  newSVpv( option->text, PPD_MAX_NAME ), 0 );
+					  newSVpv( option->text, PPD_MAX_TEXT ), 0 );
 
 			hv_store( hv, "ui", 
 					  strlen( "ui" ),
@@ -44,7 +44,7 @@ hash_ppd_option_t( ppd_option_t* option )
 
 			choices = newAV();
 
-			hv_store( hv, "choices", 
+			hv_store( hv, "choices",
 					  strlen( "choices" ),
 					  newSVsv( newRV( (SV*)choices ) ), 0 );
 
@@ -64,16 +64,21 @@ hash_ppd_option_t( ppd_option_t* option )
 				hv_store( choice, "text", 
 						  strlen( "text" ),
 						  newSVpv( option->choices[loop].text, 
-								   PPD_MAX_NAME ), 0 );
+								   PPD_MAX_TEXT ), 0 );
 
-				hv_store( choice, "code", 
-						  strlen( "code" ),
-						  newSVpv( option->choices[loop].code, 
-								   strlen( option->choices[loop].code ) ), 0 );
+				if(option->choices[loop].code != NULL)
+					hv_store( choice, "code",
+					    strlen( "code" ),
+					    newSVpv( option->choices[loop].code,
+						     strlen( option->choices[loop].code ) ), 0 );
 
 				av_push( choices, newRV( (SV*)choice ) );
 			}
+			return( hv );
+		
+		} else {
+			return(NULL);
 		}
-
-		return( hv );
 }
+
+// vim: noet sts=8 sw=8

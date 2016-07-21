@@ -716,6 +716,8 @@ NETCUPS_getFirstOption( ppd )
 	CODE:
 		option = ppdFirstOption( ppd );
 		RETVAL = hash_ppd_option_t( option );
+                if (RETVAL == 0)
+		  XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -727,6 +729,8 @@ NETCUPS_getNextOption( ppd )
 	CODE:
 		option = ppdNextOption( ppd );
 		RETVAL = hash_ppd_option_t( option );
+                if (RETVAL == 0)
+		  XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -739,6 +743,8 @@ NETCUPS_getOption( ppd, keyword )
 	CODE:
 		option = ppdFindOption( ppd, keyword );
 		RETVAL = hash_ppd_option_t( option );
+                if (RETVAL == 0)
+		  XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
