@@ -1221,7 +1221,7 @@ Provides the description string associated with this printer.
 
 my $error = $dest->getError();
 
-Utility method for returning the last error that occured.
+Utility method for returning the last error that occurred.
 
 =item B<getName>
 
