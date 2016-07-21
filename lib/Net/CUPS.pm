@@ -1332,8 +1332,9 @@ L<Net::CUPS::Destination>, L<Net::CUPS::PPD>, L<Net::CUPS::IPP>
 
 =head1 SUPPORT
 
-Support for this module and other software developed by 
-Dracken Technology, Inc can be found at http://www.dracken.com/.
+Net::CUPS is currently maintained by Stefan Seifert <NINE@cpan.org>.
+The Github repository for this project is at
+L<https://github.com/niner/perl-Net-CUPS>. Pull requests are welcome.
 
 =head1 AUTHOR
 

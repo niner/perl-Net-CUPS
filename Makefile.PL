@@ -56,14 +56,23 @@ $config{LIBS} = `cups-config --libs`;
 WriteMakefile(
     NAME              => 'Net::CUPS',
     VERSION_FROM      => 'lib/Net/CUPS.pm', # finds $VERSION
-	LICENSE			  => 'perl',
+    LICENSE           => 'perl',
     PREREQ_PM         => {'Test::More'  =>  0, }, # e.g., Module::Name => 1.1
-    ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
-      (ABSTRACT_FROM  => 'lib/Net/CUPS.pm', # retrieve abstract from module
-       AUTHOR         => 'D. Hageman <dhageman@dracken.com>') : ()),
+    ABSTRACT_FROM     => 'lib/Net/CUPS.pm', # retrieve abstract from module
+    AUTHOR            => 'D. Hageman <dhageman@dracken.com>',
     LIBS              => [''], # e.g., '-lm'
     DEFINE            => '', # e.g., '-DHAVE_SOMETHING'
-	%config
+    META_MERGE        => {
+        "meta-spec" => { version => 2 },
+        resources => {
+            repository => {
+                type => 'git',
+                git => 'https://github.com/niner/perl-Net-CUPS.git',
+                web => 'https://github.com/niner/perl-Net-CUPS',
+            },
+        },
+    },
+    %config
 );
 if  (eval {require ExtUtils::Constant; 1}) {
   # If you edit these definitions to change the constants used by this module,
