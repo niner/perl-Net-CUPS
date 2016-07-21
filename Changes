@@ -1,5 +1,13 @@
 Revision history for Perl extension Net::CUPS.
 
+0.63 Thu Jul 21 09:15:00 2016
+	- Fix segfaults in Net::CUPS::PPD::getNextOption when enumerating
+	  options by Alexis Bienvenüe
+	- Fix bad free() when finalizing the result of getDestinations()
+	  by Alexis Bienvenüe
+	- Fix a spelling mistake by Gregor Herrmann
+	- Update support information
+
 0.62 Thu Jul 21 08:20:30 2016
 	- Fix version check on CUPS 2 by Mathieu Simon
 	- Fix compatibility with CUPS >= 1.6 by contyk
