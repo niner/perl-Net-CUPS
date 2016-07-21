@@ -67,6 +67,25 @@ password_cb_wrapper(const char *prompt)
     return password;
 }
 
+cups_dest_t* cupsCloneDest(cups_dest_t* src) {
+	int i;
+	cups_dest_t *dst = malloc(sizeof(cups_dest_t));
+	memcpy(dst, src, sizeof(cups_dest_t));
+	if(src->name != NULL)
+		dst->name = strdup(src->name);
+	if(src->instance != NULL)
+		dst->instance = strdup(src->instance);
+	dst->options = malloc(src->num_options * sizeof(cups_option_t));
+	for(i = 0; i < src->num_options; i++) {
+		memcpy(&dst->options[i], &src->options[i], sizeof(cups_option_t));
+		if(src->options[i].name != NULL)
+			dst->options[i].name = strdup(src->options[i].name);
+		if(src->options[i].value != NULL)
+			dst->options[i].value = strdup(src->options[i].value);
+	}
+	return(dst);
+}
+
 MODULE = Net::CUPS		PACKAGE = Net::CUPS		
 
 PROTOTYPES: DISABLE
@@ -153,9 +172,15 @@ NETCUPS_getDestinations()
 		for( loop = 0; loop < count; loop++ )
 		{
 			rv = sv_newmortal();
-			sv_setref_pv( rv, "Net::CUPS::Destination", &destinations[loop] );
+			/* FIXME cloning is probably not the best way to go at this.
+			   It's at best a band aid for incorrect memory management
+			   throughout this code base. Also there's a cupsCopyDest
+			   function that seems to be doing the same as cupsCloneDest. */
+			cups_dest_t *single = cupsCloneDest( &destinations[loop] );
+			sv_setref_pv( rv, "Net::CUPS::Destination", single );
 			XPUSHs( rv );
 		}
+		cupsFreeDests(count, destinations);
 		XSRETURN( count );
 
 ppd_file_t*
