@@ -1131,7 +1131,7 @@ CUPS.
 $ipp->addString( $group, $type, $name, $charset, $value );
 
 Implementation of the CUPS C function "ippAddString".  Please refer the
-IPP documenation for its usage.
+IPP documentation for its usage.
 
 =item B<getAttributes>
 
